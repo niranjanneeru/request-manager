@@ -1,5 +1,3 @@
-from threading import Lock
-
 from langchain_community.vectorstores import Qdrant
 from langchain_together import TogetherEmbeddings
 from qdrant_client import QdrantClient
@@ -39,11 +37,15 @@ class QClient:
             metadatas=[{"document_id": document_id} for _ in chunks]
         )
 
+        retriever = vectorstore.as_retriever()
+
+        return retriever
+
     def fetch_retriever_by_document_id(self, document_id):
         metadata_filter = Filter(
             must=[
                 FieldCondition(
-                    key="document_id",  # Field to filter on
+                    key="metadata.document_id",  # Field to filter on
                     match=MatchValue(value=document_id)  # Value of the document_id
                 )
             ]

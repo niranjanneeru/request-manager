@@ -34,11 +34,14 @@ def add_to_knowledge_base():
     with open(pdf_filename, 'wb') as f:
         f.write(response.content)
 
-    KnowledgeBase().add_to_kb(pdf_filename, document_id)
+    response = KnowledgeBase().add_to_kb(pdf_filename, document_id)
 
-    os.remove(pdf_filename)
+    try:
+        os.remove(pdf_filename)
+    except Exception as e:
+        pass
 
-    return jsonify({"message": "PDF processed and stored successfully!"}), 200
+    return jsonify(response), 200
 
 
 @api.route('/generate-assessment', methods=['POST'])
@@ -57,6 +60,7 @@ def generate_assessment():
 
     return jsonify(response), 200
 
+
 @api.route('/answer', methods=['POST'])
 def answer_question():
     data = request.json
@@ -68,5 +72,51 @@ def answer_question():
     choices = data.get('choices')
 
     response = assessment_service.answer_question(question, question_type, weightage, answer, choices)
+
+    return jsonify(response), 200
+
+
+@api.route('/score', methods=['POST'])
+def score_answer():
+    data = request.json
+
+    question = data.get('question')
+    question_type = data.get('type')
+    answer = data.get('answer')
+    total_score = data.get('total_score')
+    document_id = data.get('document_id', None)
+
+    response = assessment_service.score_answer(question, question_type, total_score, answer, document_id)
+
+    return jsonify(response), 200
+
+
+@api.route('assessment/feedback', methods=['POST'])
+def assessment_feedback():
+    data = request.json
+
+    assessment_name = data.get('assessment_name')
+    score_obtained = data.get('score_obtained')
+    assessment_difficulty = data.get('assessment_difficulty')
+    total_score = data.get('total_score')
+    assessment_outcomes = data.get('assessment_outcomes')
+    questions_data = data.get('questions_data')
+    document_id = data.get('document_id', None)
+
+    response = assessment_service.feedback_generator(assessment_name, total_score, score_obtained,
+                                                     assessment_difficulty, assessment_outcomes, document_id,
+                                                     questions_data)
+
+    return jsonify(response), 200
+
+
+@api.route('assessment/properties', methods=['POST'])
+def assessment_properties():
+    data = request.json
+
+    questions_data = data.get('questions_data')
+    document_id = data.get('document_id', None)
+
+    response = assessment_service.assessment_properties(questions_data, document_id)
 
     return jsonify(response), 200

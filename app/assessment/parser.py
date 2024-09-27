@@ -128,3 +128,73 @@ class AssessmentOutputParser(BaseOutputParser):
                 parsed_questions.append(self.parse_case_study(block))
 
         return [q for q in parsed_questions if q is not None]  # Filter out None values
+
+
+class ScoreAnswerOutputParser(BaseOutputParser):
+    def parse(self, output_text: str):
+        feedback_pattern = re.compile(r"Score:\s*(\d+)\nFeedback:\n(.*)", re.DOTALL)
+
+        # Search for matches
+        match = feedback_pattern.search(output_text)
+
+        if match:
+            score = match.group(1).strip()  # Capture the score
+            feedback = match.group(2).strip()  # Capture the feedback
+            return {
+                "score": score,
+                "feedback": feedback
+            }
+        return None
+
+
+class FeedbackGeneratorOutputParser(BaseOutputParser):
+    def parse(self, output_text: str):
+        print(output_text)
+        feedback_pattern = re.compile(
+            r"Feedback(.*?)\n\nStrengths:\n(.*?)\n\nAreas for Improvement:\n(.*?)\n\nSkills Acquired \(Assessment Outcomes\):\n(.*?)\n\nConclusion:\n(.*)",
+            re.DOTALL
+        )
+
+        # Search for matches
+        match = feedback_pattern.search(output_text)
+
+        if match:
+            return {
+                "Introduction": match.group(1).strip(),
+                "Strengths": match.group(2).strip(),
+                "Areas for Improvement": match.group(3).strip(),
+                "Skills Acquired (Assessment Outcomes)": match.group(4).strip(),
+                "Conclusion": match.group(5).strip()
+            }
+
+        return None
+
+
+class AssessmentPropertiesOutputParser(BaseOutputParser):
+    def parse(self, text: str):
+        assessment_pattern = re.compile(
+            r"Assessment Name:\s*(.*?)\n\nDifficulty Level:\s*(.*?)\n\nAssessment Outcomes \(Skills Acquired\):\n(.*?)\n\nRequirements:\n(.*)",
+            re.DOTALL
+        )
+
+        # Search for the sections
+        match = assessment_pattern.search(text)
+
+        if match:
+            assessment_name = match.group(1).strip()
+            difficulty_level = match.group(2).strip()
+
+            # Split the assessment outcomes into a list
+            assessment_outcomes = [outcome.strip() for outcome in match.group(3).split('\n') if outcome.strip()]
+
+            # Split the requirements into a list
+            requirements = [req.strip() for req in match.group(4).split('\n') if req.strip()]
+
+            return {
+                "Assessment Name": assessment_name,
+                "Difficulty Level": difficulty_level,
+                "Assessment Outcomes": assessment_outcomes,
+                "Requirements": requirements
+            }
+        else:
+            return None
