@@ -9,7 +9,10 @@ def create_app():
     from app.routes import api
     app.register_blueprint(api, url_prefix='/api')
 
-    from app.chat.routes import chat
+    from app.chat import chat
     app.register_blueprint(chat, url_prefix='/api/chat')
+
+    from app.lesson_plan import  lesson_plan
+    app.register_blueprint(lesson_plan, url_prefix='/api/lesson-plan')
 
     return app

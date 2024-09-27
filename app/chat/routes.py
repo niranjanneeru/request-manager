@@ -14,4 +14,4 @@ def teacher_chat():
     message = data.get('message')
     response = chat_service.teacher_chat(session_id, message)
 
-    return jsonify({"message": f"{response}"}, 200)
+    return jsonify({"message": f"{response}"}), 200
