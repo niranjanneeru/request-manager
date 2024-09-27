@@ -177,24 +177,21 @@ class AssessmentPropertiesOutputParser(BaseOutputParser):
             re.DOTALL
         )
 
-        # Search for the sections
         match = assessment_pattern.search(text)
 
         if match:
             assessment_name = match.group(1).strip()
             difficulty_level = match.group(2).strip()
 
-            # Split the assessment outcomes into a list
             assessment_outcomes = [outcome.strip() for outcome in match.group(3).split('\n') if outcome.strip()]
 
-            # Split the requirements into a list
             requirements = [req.strip() for req in match.group(4).split('\n') if req.strip()]
 
             return {
-                "Assessment Name": assessment_name,
-                "Difficulty Level": difficulty_level,
-                "Assessment Outcomes": assessment_outcomes,
-                "Requirements": requirements
+                "name": assessment_name,
+                "level": difficulty_level,
+                "outcomes": assessment_outcomes,
+                "requirements": requirements
             }
         else:
             return None

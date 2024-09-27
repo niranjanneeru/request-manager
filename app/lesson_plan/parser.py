@@ -7,12 +7,12 @@ class LessonPlanParser(BaseOutputParser):
     def parse(self, lesson_plan_text: str):
         lesson_plan = {
             "expected_learning_outcomes": self.parse_section(lesson_plan_text, "1. Expected Learning Outcomes"),
+            "expected_skill_development": self.parse_section(lesson_plan_text, "7. Expected Skill Development"),
             "learning_objectives": self.parse_section(lesson_plan_text, "2. Learning Objectives"),
             "key_topics_and_concepts": self.parse_section(lesson_plan_text, "3. Key Topics and Concepts"),
             "teaching_methods": self.parse_section(lesson_plan_text, "4. Teaching Methods"),
             "activities_or_exercises": self.parse_section(lesson_plan_text, "5. Activities or Exercises"),
-            "assessment_methods": self.parse_section(lesson_plan_text, "6. Assessment Methods"),
-            "expected_skill_development": self.parse_section(lesson_plan_text, "7. Expected Skill Development")
+            "assessment_methods": self.parse_section(lesson_plan_text, "6. Assessment Methods")
         }
         return lesson_plan
 

@@ -37,4 +37,7 @@ def create_app():
     from app.lesson_plan import lesson_plan
     app.register_blueprint(lesson_plan, url_prefix='/api/lesson-plan')
 
+    from app.reports import reports
+    app.register_blueprint(reports, url_prefix='/api/reports')
+
     return app

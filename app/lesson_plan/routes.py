@@ -11,8 +11,7 @@ lesson_plan_service = LessonPlan()
 def generate_lesson_plan():
     data = request.json
     session_id = data.get('session_id')
-    title = data.get('title')
     document_id = data.get('document_id')
     message = data.get('message')
-    response = lesson_plan_service.generate_lesson_plan(session_id, title, document_id, message)
+    response = lesson_plan_service.generate_lesson_plan(session_id, document_id, message)
     return jsonify(response), 200

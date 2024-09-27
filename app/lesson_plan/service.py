@@ -11,7 +11,7 @@ cache = ChatHistoryCache()
 
 
 class LessonPlan:
-    def generate_lesson_plan(self, session_id, title, document_id, message):
+    def generate_lesson_plan(self, session_id, document_id, message):
         chat_history_cache_key = f"teacher_lesson_plan:{session_id}"
         chat_history = cache.get_chat_history(chat_history_cache_key)
         prompt = ChatPromptTemplate.from_template(teacher_lesson_plan_template)
@@ -24,7 +24,6 @@ class LessonPlan:
         def log_response(x):
             chat_history.append(f"User: {message}")
             chat_history.append(f"Assistant: {x}")
-            print(x)
             return x
 
         chain = (
