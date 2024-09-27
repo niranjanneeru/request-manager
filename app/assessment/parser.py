@@ -38,7 +38,7 @@ class AssessmentOutputParser(BaseOutputParser):
             choices = ["True", "False"]
             answer = match.group(4).strip()
             return {
-                "type": "True/False",
+                "type": "True-False",
                 "weightage": weightage,
                 "question": question,
                 "choices": choices,
@@ -54,7 +54,7 @@ class AssessmentOutputParser(BaseOutputParser):
             weightage = int(match.group(1))
             question = match.group(2).strip()
             return {
-                "type": "Short Answer",
+                "type": "Short-Answer",
                 "weightage": weightage,
                 "question": question
             }
@@ -102,7 +102,7 @@ class AssessmentOutputParser(BaseOutputParser):
             weightage = int(match.group(1))
             question = match.group(2).strip()
             return {
-                "type": "Case Study",
+                "type": "Case-Study",
                 "weightage": weightage,
                 "question": question
             }

@@ -8,8 +8,8 @@ from config import Config
 
 def create_app():
     app = Flask(__name__)
-    logging.basicConfig(filename='app.log', level=logging.INFO,
-                        format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s: %(message)s')
 
     # Log incoming requests
     @app.before_request
