@@ -1,0 +1,12 @@
+Flask==3.0.3
+langchain==0.3.1
+langchain_core==0.3.6
+langchain-community==0.3.1
+langchain_together==0.2.0
+python-dotenv==1.0.1
+qdrant_client==1.11.2
+Requests==2.32.3
+pypdf2~=3.0.1
+qdrant-client~=1.11.2
+redis~=5.0.8
+langchain-core~=0.3.6
