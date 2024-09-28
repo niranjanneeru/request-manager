@@ -91,7 +91,7 @@ def score_answer():
     return jsonify(response), 200
 
 
-@api.route('assessment/feedback', methods=['POST'])
+@api.route('/feedback', methods=['POST'])
 def assessment_feedback():
     data = request.json
 

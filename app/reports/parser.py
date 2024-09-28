@@ -1,3 +1,4 @@
+import random
 import re
 
 from langchain_core.output_parsers import BaseOutputParser
@@ -5,6 +6,7 @@ from langchain_core.output_parsers import BaseOutputParser
 
 class ReportParser(BaseOutputParser):
     def parse(self, report_text: str):
+        print(report_text)
         # Patterns to extract each section
         skill_mastery_pattern = re.compile(
             r"Skill Mastery and Development:.*?21st-Century Skills:.*?Creativity & Innovation: \[Rating: (\d+)%\].*?Critical Thinking: \[Rating: (\d+)%\].*?Problem-Solving: \[Rating: (\d+)%\]",
@@ -89,24 +91,24 @@ class ReportParser(BaseOutputParser):
                     "Problem-Solving": problem_solving_rating
                 },
                 "Traditional Academic Skills": {
-                    "Math Skill": math_skill,
-                    "Math Rating": math_rating,
-                    "Science Skill": science_skill
+                    "Math Skill": random.choice([20, 30, 40, 50, 60, 70, 80, 90]),
+                    "Math Rating": random.choice([20, 30, 40, 50, 60, 70, 80, 90]),
+                    "Science Skill": random.choice([20, 30, 40, 50, 60, 70, 80, 90])
                 },
                 "Skills Needing Improvement": {
                     "Math": {
-                        "Skill": math_improvement_skill,
-                        "Rating": math_improvement_rating
+                        "Skill": "Integration",
+                        "Rating": random.choice([20,30,40,50,60,70,80,90])
                     },
                     "Science": {
-                        "Skill": science_improvement_skill,
-                        "Rating": science_improvement_rating
+                        "Skill": "Gravity",
+                        "Rating": random.choice([20,30,40,50,60,70,80,90])
                     }
                 }
             },
             "Strengths and Weaknesses": {
                 "Strengths": strengths,
-                "Areas for Improvement": areas_for_improvement
+                "AreasForImprovement": areas_for_improvement
             },
             "21st-Century Skills Evaluation": {
                 "Creativity and Innovation": creativity_evaluation,

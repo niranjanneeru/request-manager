@@ -132,19 +132,24 @@ class AssessmentOutputParser(BaseOutputParser):
 
 class ScoreAnswerOutputParser(BaseOutputParser):
     def parse(self, output_text: str):
-        feedback_pattern = re.compile(r"Score:\s*(\d+)\nFeedback:\n(.*)", re.DOTALL)
+        print(output_text)
+        result = {
+            "score": None,
+            "feedback": None
+        }
 
-        # Search for matches
-        match = feedback_pattern.search(output_text)
+        # Regex to search for the score (assuming the score is a number followed by "Score:")
+        score_match = re.search(r"Score:\s*([\d.]+)", output_text, re.IGNORECASE)
+        if score_match:
+            result["score"] = float(score_match.group(1))  # Capture the score as a float
 
-        if match:
-            score = match.group(1).strip()  # Capture the score
-            feedback = match.group(2).strip()  # Capture the feedback
-            return {
-                "score": score,
-                "feedback": feedback
-            }
-        return None
+        # Regex to search for feedback (assuming feedback comes after "Feedback:" keyword)
+        feedback_match = re.search(r"Feedback:\s*(.+)", output_text, re.IGNORECASE | re.DOTALL)
+        if feedback_match:
+            result["feedback"] = feedback_match.group(
+                1).strip()  # Capture the feedback and strip leading/trailing spaces
+
+        return result
 
 
 class FeedbackGeneratorOutputParser(BaseOutputParser):
@@ -172,12 +177,13 @@ class FeedbackGeneratorOutputParser(BaseOutputParser):
 
 class AssessmentPropertiesOutputParser(BaseOutputParser):
     def parse(self, text: str):
+        print(text)
         assessment_pattern = re.compile(
-            r"Assessment Name:\s*(.*?)\n\nDifficulty Level:\s*(.*?)\n\nAssessment Outcomes \(Skills Acquired\):\n(.*?)\n\nRequirements:\n(.*)",
+            r"\s*Assessment Name:\s*(.*?)\n\nDifficulty Level:\s*(.*?)\n\nSkills Acquired \(Assessment Outcomes\):\n(.*?)\n\nRequirements:\n(.*)",
             re.DOTALL
         )
 
-        match = assessment_pattern.search(text)
+        match = assessment_pattern.search(text.strip())
 
         if match:
             assessment_name = match.group(1).strip()

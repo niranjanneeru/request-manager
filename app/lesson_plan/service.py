@@ -29,7 +29,7 @@ class LessonPlan:
         chain = (
                 {"context": retriever,
                  "message": RunnablePassthrough(),
-                 "chat_history": lambda x: '\n'.join(chat_history),
+                 # "chat_history": lambda x: '\n'.join(chat_history),
                  }
                 | prompt
                 | model

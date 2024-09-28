@@ -168,6 +168,7 @@ Total Possible Score: {total_score}
 Please output:
 
 Score: (based on a scale of 0 to total_score)
+
 Feedback:
 If the answer is good, explain why it is good.
 If the answer is not good, explain what can be improved in a supportive and encouraging manner.
@@ -264,9 +265,11 @@ Data Provided:
 Context: {context} (If available, provide additional details such as the subject or knowledge domain)
 Assessment Questions: {assessment_questions}
 
-Example Structure:
+Strictly follow the structure:
 Assessment Name: Provide a descriptive and relevant name for the assessment.
+
 Difficulty Level: Determine and state whether the assessment is "Beginner," "Intermediate," or "Advanced."
+
 Skills Acquired (Assessment Outcomes):
 Skill 1: [Description of the skill]
 Skill 2: [Description of the skill]
